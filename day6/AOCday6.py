@@ -75,10 +75,10 @@ def moveGuard(grid):
         else:
             guardStates.append([direction,cRow,cCol])
         
-        # show movement animation
-        plt.imshow(grid)
-        time.sleep(0.01)
-        plt.show()
+        # # show movement animation
+        # plt.imshow(grid)
+        # time.sleep(0.01)
+        # plt.show()
         
     return nSpaces, grid, guardInLoop
              
@@ -96,9 +96,9 @@ for i in range(nRows):
         if lines[i][j] == '#':   grid[i][j] = -1
         elif lines[i][j] == '^': grid[i,j] = 1      
 
-plt.imshow(grid)
-time.sleep(0.01)
-plt.show()
+# plt.imshow(grid)
+# time.sleep(0.01)
+# plt.show()
             
 #%%%# Part 1 #%%#
 resultsPart1, solvedGrid,guardInLoop = moveGuard(grid)
