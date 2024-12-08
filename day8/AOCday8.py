@@ -19,12 +19,12 @@ nCols = len(lines[0])
 attenaList = dict()
 for i in range(nRows):
     for j in range(nCols):
-        entree = lines[i][j]
-        if not entree == '.':
-            if entree in attenaList: # add entree coordinates to dictionary
-                attenaList[entree].append([i,j])
+        key = lines[i][j]
+        if not key == '.':
+            if key in attenaList: # add entree coordinates to dictionary
+                attenaList[key].append([i,j])
             else: # create new entree in dictionary
-                attenaList[entree] = [[i,j]]
+                attenaList[key] = [[i,j]]
 
 #%%%# Part 1 #%%#
 aNodeGrid = np.zeros([nRows,nCols],dtype=int)

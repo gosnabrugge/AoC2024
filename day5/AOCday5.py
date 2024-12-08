@@ -3,65 +3,75 @@
 Advent of Code day 5 script
 """
 import math
+import time
+t0 = time.time()
 
-#### helper functions ####
-
-
-#### read input file ####
+#%%# read input file #%%#
 with open('input.txt') as file:
     lines = [line.rstrip() for line in file]
 
-# extract rules from input
 rules = lines[0:1176]
-for i in range(len(rules)):
-    rules[i] = list(map(int,rules[i].split('|')))
-
-# extract updates from input    
 updates = lines[1177:1389]
+
+# collect rules in dictionary
+rulesDict = dict()
+for iRule in range(len(rules)):
+    entrees = rules[iRule].split('|')
+    key = entrees[0]
+    Num = int(entrees[1])
+    if not key == '.':
+        if key in rulesDict: # add entree coordinates to dictionary
+            rulesDict[key].append(Num)
+        else: # create new entree in dictionary
+            rulesDict[key] = [Num]
+
+# convert updates to integer list    
 for i in range(len(updates)):
     updates[i] = list(map(int,updates[i].split(',')))
 
 
-#### Part 1 ####
+#%%# Part 1 #%%#
 resultsPart1 = 0
 
-
-# find all correct updates
-incorrectUpdates = []
+incorrectUpdates = [] # collected for part 2
 for update in updates:
     correctUpdate = True
-    for rule in rules:
-        indices1 = [i for i,val in enumerate(update) if val==rule[0]]
-        indices2 = [i for i,val in enumerate(update) if val==rule[1]]
-        if len(indices1) >= 1 and len(indices2) >= 1:
-            if max(indices1) > min(indices2):
+    for i in range(len(update)):
+        for j in range(i+1,len(update)):
+            num1 = update[i]
+            num2 = update[j]
+            if num1 in rulesDict[str(num2)]:
                 correctUpdate = False
-                incorrectUpdates.append(update)
                 break
-            
+        if not correctUpdate:
+           break 
+              
     if correctUpdate: # only consider correct updates
         resultsPart1 += update[math.floor(len(update)/2)]
-        
-    
-print('Part 1: '+ str(resultsPart1))
+    else:
+        incorrectUpdates.append(update)
 
-#### Part 2 ####
+#%%# Part 2 #%%#
 resultsPart2 = 0
 
 for update in incorrectUpdates:
-    newUpdate = []
-    for num in update:
-        indices = []
-        for rule in rules:
-            indices += [i for i,val in enumerate(newUpdate) if num==rule[0] and val == rule[1]]
-        
-        if len(indices) == 0:
-            newUpdate.append(num)
+    newUpdate = [update[0]]
+    for i in range(1,len(update)):
+        newInd = -1
+        for j in range(len(newUpdate)):
+            if newUpdate[j] in rulesDict[str(update[i])]: 
+                newInd = j
+                break
+
+        if newInd == -1:
+            newUpdate.append(update[i])
         else:
-            indNum = min(indices)
-            newUpdate = newUpdate[0:indNum] + [num] + newUpdate[indNum::]
+            newUpdate = newUpdate[0:newInd] + [update[i]] + newUpdate[newInd::]
     
     resultsPart2 += newUpdate[math.floor(len(newUpdate)/2)]
     
+#%%%# print results #%%#
+tTot = time.time()-t0
+print('Part 1: '+ str(resultsPart1))
 print('Part 2: '+ str(resultsPart2))
-
+print(f'runtime: {tTot:.3f} sec')
