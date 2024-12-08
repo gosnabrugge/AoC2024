@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Advent of Code day .. script
+Advent of Code 2024 day .. script
 author: g.osnabrugge
 """
 #import numpy as np
 import time
+t0 = time.time()
 
 #%%# helper functions #%%#
 
@@ -21,7 +22,6 @@ import time
 #     lines = [line.rstrip() for line in file]
 
 #%%%# Part 1 #%%#
-t0 = time.time()
 resultsPart1 = 0
 
 

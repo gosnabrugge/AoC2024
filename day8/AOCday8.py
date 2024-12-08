@@ -1,32 +1,70 @@
 # -*- coding: utf-8 -*-
 """
-Advent of Code day 8 script
+Advent of Code 2024 day 8 script 
 author: g.osnabrugge
 """
-#import numpy as np
+import numpy as np
 import time
-
-#%%# helper functions #%%#
+t0 = time.time()
 
 #%%# readout puzzle input file #%%#
-# # extract all contents of input file
-# inputs = open('input.txt').read()
+# readout puzzle txt file into separate string lines (without white spaces)
+with open('input.txt') as file:
+    lines = [line.rstrip() for line in file]
 
-# # extract entrees per puzzle line
-# for line in open('input.txt'):
-#     entrees = list(map(int,line.split(' ')))
+nRows = len(lines)
+nCols = len(lines[0])
 
-# # readout puzzle txt file into separate string lines (without white spaces)
-# with open('input.txt') as file:
-#     lines = [line.rstrip() for line in file]
+# collect all attena locations in dictionary
+attenaList = dict()
+for i in range(nRows):
+    for j in range(nCols):
+        entree = lines[i][j]
+        if not entree == '.':
+            if entree in attenaList: # add entree coordinates to dictionary
+                attenaList[entree].append([i,j])
+            else: # create new entree in dictionary
+                attenaList[entree] = [[i,j]]
 
 #%%%# Part 1 #%%#
-t0 = time.time()
-resultsPart1 = 0
+aNodeGrid = np.zeros([nRows,nCols],dtype=int)
 
+for key in attenaList:
+    nAttenas = len(attenaList[key])
+    for i in range(nAttenas):
+        for j in range(nAttenas):
+            if not i == j:
+                iAttena = attenaList[key][i]
+                jAttena = attenaList[key][j]
+                aNodeRow = iAttena[0] + 2*(jAttena[0]-iAttena[0])
+                aNodeCol = iAttena[1] + 2*(jAttena[1]-iAttena[1])
+                nodeOnGrid = (aNodeRow >= 0 and aNodeRow < nRows) and (aNodeCol >= 0 and aNodeCol < nCols)
+                if nodeOnGrid:
+                    aNodeGrid[aNodeRow,aNodeCol] = 1
+
+resultsPart1 = np.sum(aNodeGrid.flatten())
 
 #%%%# Part 2 #%%#
-resultsPart2 = 0
+aNodeGrid2 = np.zeros([nRows,nCols],dtype=int)
+
+for key in attenaList:
+    nAttenas = len(attenaList[key])
+    for i in range(nAttenas):
+        for j in range(nAttenas):
+            if not i == j:
+                nodeOnGrid = True
+                iNode = 0
+                while nodeOnGrid:
+                    iAttena = attenaList[key][i]
+                    jAttena = attenaList[key][j]
+                    aNodeRow = iAttena[0] + iNode*(jAttena[0]-iAttena[0])
+                    aNodeCol = iAttena[1] + iNode*(jAttena[1]-iAttena[1])
+                    nodeOnGrid = (aNodeRow >= 0 and aNodeRow < nRows) and (aNodeCol >= 0 and aNodeCol < nCols)
+                    if nodeOnGrid:
+                        aNodeGrid2[aNodeRow,aNodeCol] = 1
+                        iNode += 1
+
+resultsPart2 = np.sum(aNodeGrid2.flatten())
 
 #%%%# print results #%%#
 tTot = time.time()-t0
