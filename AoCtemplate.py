@@ -10,15 +10,17 @@ t0 = time.time()
 #%%# helper functions #%%#
 
 #%%# readout puzzle input file #%%#
+# inputFile = 'input.txt'
+
 # # extract all contents of input file
-# inputs = open('input.txt').read()
+# inputs = open(inputFile).read()
 
 # # extract entrees per puzzle line
-# for line in open('input.txt'):
+# for line in open(inputFile):
 #     entrees = list(map(int,line.split(' ')))
 
 # # readout puzzle txt file into separate string lines (without white spaces)
-# with open('input.txt') as file:
+# with open(inputFile) as file:
 #     lines = [line.rstrip() for line in file]
 
 #%%%# Part 1 #%%#
