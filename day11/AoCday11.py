@@ -44,8 +44,7 @@ nBlinks = 75
 for iBlink in range(nBlinks):
     stones = blink(stones)
     if iBlink == 24: resultsPart1 = sum([n for _,n in stones.items()])
-        
-resultsPart2 = sum([n for _ , n in stones.items()])
+    if iBlink == 74: resultsPart2 = sum([n for _ , n in stones.items()])
 
 #%%%# print results #%%#
 print('Part 1: '+ str(resultsPart1))
