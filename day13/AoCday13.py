@@ -12,9 +12,7 @@ t0 = time.time()
 def loadData(inputFile):
     # load raw data in string format (line by line)
     with open(inputFile) as file:
-        lines = [line.rstrip() for line in file]
-    
-    return lines
+        return [line.rstrip() for line in file]
 
 def solveCraneMachine(mLines, part2):
     # parse string data into system of equations and find solution
