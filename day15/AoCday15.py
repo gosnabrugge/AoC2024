@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Advent of Code 2024 day .. script
+Advent of Code 2024 day 15 script
 author: g.osnabrugge
 """
 import numpy as np
@@ -9,8 +9,6 @@ import time
 t0 = time.time()
 
 #%%# helper functions #%%#
-
-#%%# readout puzzle input file #%%#
 def loadData(inputFile, part):
     # # readout puzzle txt file into separate string lines (without white spaces)
     with open(inputFile) as file:

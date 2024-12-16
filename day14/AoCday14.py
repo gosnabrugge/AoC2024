@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Advent of Code 2024 day .. script
+Advent of Code 2024 day 14 script
 author: g.osnabrugge
 """
 import numpy as np
